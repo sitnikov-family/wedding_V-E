@@ -1090,6 +1090,7 @@ section {
     .stamp {
         width: 180px;
         height: 180px;
+        left: auto;
     }
 
     /* треугольник верхний */
@@ -1375,3 +1376,4 @@ section {
     }
 
 }
+
