@@ -1352,8 +1352,8 @@ section {
 
     /* Анкета Google Forms */
     .google-forms-iframe {
-        min-height: 500px;
-        height: 700px;
+        min-height: 700px;
+        height: 800px;
         /* Увеличиваем высоту формы для телефонов */
     }
 
@@ -1401,3 +1401,4 @@ section {
         font-size: 0.65rem;
     }
 }
+
