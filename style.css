@@ -875,84 +875,6 @@ section {
 }
 
 
-/* =========================== */
-/* АДАПТИВНОСТЬ КАРУСЕЛИ */
-/* =========================== */
-
-/* Планшеты */
-@media (max-width: 768px) {
-    .carousel {
-        height: 500px;
-        border-radius: 15px;
-    }
-
-    .carousel-btn {
-        width: 45px;
-        height: 45px;
-        font-size: 1.1rem;
-    }
-
-    .carousel-slide-title {
-        font-size: 1.1rem;
-    }
-
-    .carousel-caption {
-        font-size: 1rem;
-        padding: 0 15px;
-    }
-}
-
-/* Мобильные телефоны */
-@media (max-width: 480px) {
-    .carousel {
-        height: 500px;
-        border-radius: 12px;
-    }
-
-    .carousel-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
-    }
-
-    .carousel-btn--prev {
-        left: 10px;
-    }
-
-    .carousel-btn--next {
-        right: 10px;
-    }
-
-    .carousel-slide-title {
-        font-size: 1rem;
-        padding: 10px;
-    }
-
-    .carousel-slide-number {
-        font-size: 0.8rem;
-        padding: 0 10px 10px;
-    }
-
-    .carousel-dots {
-        bottom: 15px;
-        gap: 8px;
-    }
-
-    .carousel-dot {
-        width: 10px;
-        height: 10px;
-    }
-
-    .carousel-caption {
-        font-size: 0.9rem;
-        padding: 0 10px;
-    }
-
-    .carousel-container {
-        padding: 0 10px;
-    }
-}
-
 
 
 .location-photo-container-details {
@@ -1126,8 +1048,7 @@ section {
 
     .hero {
         /* Изменяем позицию фона - смещаем влево на 30% */
-        min-height: 10vh;
-        background-position: left 250% center;
+        background-position-x: 60%;
     }
 
     /* Главный баннер */
@@ -1246,6 +1167,26 @@ section {
     .color-palette {
         gap: 15px;
         /* Уменьшаем расстояние между квадратами */
+    }
+
+    .carousel {
+        height: 500px;
+        border-radius: 15px;
+    }
+
+    .carousel-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+    }
+
+    .carousel-slide-title {
+        font-size: 1.1rem;
+    }
+
+    .carousel-caption {
+        font-size: 1rem;
+        padding: 0 15px;
     }
 
     .Details-title {
@@ -1525,6 +1466,54 @@ section {
         gap: 10px;
         /* Уменьшаем расстояние между квадратами */
         margin-top: 30px;
+    }
+
+    .carousel {
+        height: 500px;
+        border-radius: 12px;
+    }
+
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .carousel-btn--prev {
+        left: 10px;
+    }
+
+    .carousel-btn--next {
+        right: 10px;
+    }
+
+    .carousel-slide-title {
+        font-size: 1rem;
+        padding: 10px;
+    }
+
+    .carousel-slide-number {
+        font-size: 0.8rem;
+        padding: 0 10px 10px;
+    }
+
+    .carousel-dots {
+        bottom: 15px;
+        gap: 8px;
+    }
+
+    .carousel-dot {
+        width: 10px;
+        height: 10px;
+    }
+
+    .carousel-caption {
+        font-size: 0.9rem;
+        padding: 0 10px;
+    }
+
+    .carousel-container {
+        padding: 0 10px;
     }
 
     .Details-title {
