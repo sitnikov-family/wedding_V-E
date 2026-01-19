@@ -464,7 +464,6 @@ section {
     opacity: 1 !important;
     transition: opacity 0.3s ease !important;
     will-change: left, top !important;
-    visibility: hidden;
     /* Скрыто, но сохраняет место */
 }
 
@@ -1595,3 +1594,4 @@ section {
         font-size: 0.65rem;
     }
 }
+
