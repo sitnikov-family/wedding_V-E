@@ -1051,6 +1051,7 @@ section {
     .hero {
         /* Изменяем позицию фона - смещаем влево на 30% */
         background-position-x: 60%;
+        min-height: 10vh;
     }
 
     /* Главный баннер */
@@ -1256,6 +1257,7 @@ section {
     .hero {
         /* Изменяем позицию фона - смещаем влево на 60% */
         background-position: left 60% center;
+        min-height: 10vh;
     }
 
     /* Главный баннер */
@@ -1587,4 +1589,5 @@ section {
         font-size: 0.65rem;
     }
 }
+
 
