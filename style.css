@@ -454,17 +454,18 @@ section {
 }
 
 
+/* Изначально скрываем сердце */
 .heart-fixed {
     position: fixed !important;
     width: 60px !important;
     height: 60px !important;
-    z-index: 1000 !important;
+    z-index: 999999 !important;
     pointer-events: none !important;
     transform: translate(-50%, -50%) !important;
-    opacity: 1 !important;
+    opacity: 0;
+    /* ← УБЕРИТЕ !important здесь */
     transition: opacity 0.3s ease !important;
     will-change: left, top !important;
-    /* Скрыто, но сохраняет место */
 }
 
 .heart-icon {
@@ -1466,9 +1467,9 @@ section {
     }
 
     .color-square {
-        width: 40px;
+        width: 60px;
         /* Уменьшаем квадраты палитры */
-        height: 40px;
+        height: 60px;
     }
 
     .color-palette {
@@ -1594,4 +1595,3 @@ section {
         font-size: 0.65rem;
     }
 }
-
