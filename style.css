@@ -186,15 +186,18 @@ section {
     line-height: 1;
 }
 
+/* Стрелка для скролла ниже таймера */
 .scroll-hint {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative;
+    /* Убрали absolute */
+    margin-top: 30px;
+    /* Отступ от таймера/кнопки музыки */
     font-size: 2rem;
     color: white;
     animation: bounce 2s infinite;
     cursor: pointer;
+    text-align: center;
+    display: block;
 }
 
 @keyframes bounce {
@@ -204,15 +207,18 @@ section {
     50%,
     80%,
     100% {
-        transform: translateX(-50%) translateY(0);
+        transform: translateY(0);
+        /* Убрали translateX(-50%) */
     }
 
     40% {
-        transform: translateX(-50%) translateY(-10px);
+        transform: translateY(-10px);
+        /* Убрали translateX(-50%) */
     }
 
     60% {
-        transform: translateX(-50%) translateY(-5px);
+        transform: translateY(-5px);
+        /* Убрали translateX(-50%) */
     }
 }
 
@@ -288,13 +294,10 @@ section {
 /* =========================== */
 /* КНОПКА УПРАВЛЕНИЯ МУЗЫКОЙ */
 /* =========================== */
-.music-control-container {
+.controls-top {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 30px;
-    /* Отступ от таймера */
-    position: relative;
+    justify-content: center;
+    margin: 20px 0 10px;
 }
 
 .music-control {
@@ -414,7 +417,8 @@ section {
     position: relative;
     width: 100%;
     height: 1378px;
-    margin: 80px 0;
+    margin: 40px 0 30px 0;
+    /* Уменьшили отступы: верх 40px, низ 30px */
     overflow: hidden;
 }
 
@@ -460,6 +464,8 @@ section {
     opacity: 1 !important;
     transition: opacity 0.3s ease !important;
     will-change: left, top !important;
+    visibility: hidden;
+    /* Скрыто, но сохраняет место */
 }
 
 .heart-icon {
@@ -1589,5 +1595,3 @@ section {
         font-size: 0.65rem;
     }
 }
-
-
