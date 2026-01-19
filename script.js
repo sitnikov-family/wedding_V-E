@@ -422,8 +422,17 @@ document.addEventListener('DOMContentLoaded', function () {
 // Анимация сердца по таймлайну
 // -------------------------------
 (function () {
+
+
     document.addEventListener('DOMContentLoaded', function () {
         const heart = document.querySelector('.heart-fixed');
+
+        if (heart) {
+            heart.style.opacity = '0';
+            heart.style.left = '-10000px';
+            heart.style.top = '-10000px';
+        }
+
         const motionPath = document.getElementById('heartMotionPath');
         const section = document.getElementById('scheduleSection');
         const timelineViewport = document.querySelector('.timeline-viewport');
@@ -478,8 +487,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const heartX = svgRect.left + (pointOnPath.x * scaleX);
             const heartY = svgRect.top + (pointOnPath.y * scaleY);
 
+
             heart.style.left = heartX + 'px';
             heart.style.top = heartY + 'px';
+
 
             const timelineItems = document.querySelectorAll('.timeline-item');
 
