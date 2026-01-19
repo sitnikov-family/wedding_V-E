@@ -427,11 +427,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('DOMContentLoaded', function () {
         const heart = document.querySelector('.heart-fixed');
 
-        if (heart) {
-            heart.style.opacity = '0';
-            heart.style.left = '-10000px';
-            heart.style.top = '-10000px';
-        }
 
         const motionPath = document.getElementById('heartMotionPath');
         const section = document.getElementById('scheduleSection');
@@ -439,7 +434,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (!heart || !motionPath || !section || !timelineViewport) return;
 
-        const pathLength = motionPath.getTotalLength();
+        const pathLength = motionPath ? motionPath.getTotalLength() : 0;
         const ACTIVATION_ZONE = 0.07;
 
         const elementPositions = [
@@ -450,7 +445,19 @@ document.addEventListener('DOMContentLoaded', function () {
             0.83   // Финал (23:00)
         ];
 
+        setTimeout(() => {
+            setTimeout(() => {
+                updateHeartPosition(); // Устанавливаем начальную позицию
+            }, 1);
+            // Повторяем еще раз для гарантии
+            setTimeout(updateHeartPosition, 1);
+        }, 300);
+
         function updateHeartPosition() {
+            // 1. Сначала получаем сердце
+            const heart = document.querySelector('.heart-fixed');
+            if (!heart) return;
+
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             const windowHeight = window.innerHeight;
 
@@ -487,13 +494,32 @@ document.addEventListener('DOMContentLoaded', function () {
             const heartX = svgRect.left + (pointOnPath.x * scaleX);
             const heartY = svgRect.top + (pointOnPath.y * scaleY);
 
-
+            // Всегда обновляем позицию сердца (даже когда оно не видно)
             heart.style.left = heartX + 'px';
             heart.style.top = heartY + 'px';
 
+            // Показываем сердце только если:
+            // 1. Мы уже начали скроллить timeline (progress > 0.01)
+            // 2. И сердце в пределах видимой области
+            const isInViewport = heartX > 0 && heartY > 0 &&
+                heartX < window.innerWidth &&
+                heartY < window.innerHeight;
+            const isTimelineStarted = progress > 0.00001;
+
+
+            // Показываем сердце, когда проскроллили 60% высоты экрана
+            const scrollTrigger = window.innerHeight * 0.01; // 60% от высоты окна
+            const hasScrolledPastHero = scrollTop > scrollTrigger;
+
+            if (hasScrolledPastHero && isInViewport) {
+                heart.style.opacity = '1';
+            } else if (progress > 0.01 && isInViewport) {
+                heart.style.opacity = '1';
+            } else {
+                heart.style.opacity = '0';
+            }
 
             const timelineItems = document.querySelectorAll('.timeline-item');
-
             timelineItems.forEach((item, index) => {
                 const elementPosition = elementPositions[index];
                 if (Math.abs(progress - elementPosition) <= ACTIVATION_ZONE) {
@@ -520,6 +546,7 @@ document.addEventListener('DOMContentLoaded', function () {
         window.addEventListener('load', updateHeartPosition);
 
         updateHeartPosition();
+        window.addEventListener('resize', updateHeartPosition);
     });
 
     // ===========================
