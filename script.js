@@ -1,1596 +1,615 @@
-/* =========================== */
-/* БАЗОВЫЕ НАСТРОЙКИ И ШРИФТЫ */
-/* =========================== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-@font-face {
-    font-family: 'Passions Conflict';
-    src: url('fonts/PassionsConflictRUS-Regular.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Montserrat Thin';
-    src: url('fonts/montserrat-thin-2.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Montserrat Thin Italic';
-    src: url('fonts/Montserrat-Regular.ttf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-body {
-    font-family: 'Roboto', sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: rgb(245, 236, 221);
-    overflow-x: hidden;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-section {
-    padding: 20px 0;
-}
-
-/* =========================== */
-/* ЗАСТАВКА С КОНВЕРТОМ */
-/* =========================== */
-.envelope-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-    overflow: hidden;
-}
-
-.envelope-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgb(120, 124, 89);
-    z-index: 1;
-    transition: opacity 4s ease;
-}
-
-.triangle-top {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 50vh;
-    background: url('images/triangle-top.png') center/contain no-repeat;
-    transition: transform 10s cubic-bezier(0.34, 1.56, 0.64, 1);
-    z-index: 3;
-}
-
-.triangle-bottom {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 50vh;
-    background: url('images/triangle-bottom.png') center/contain no-repeat;
-    transition: transform 10s cubic-bezier(0.34, 1.56, 0.64, 1);
-    z-index: 3;
-}
-
-.stamp {
-    position: relative;
-    z-index: 4;
-    cursor: pointer;
-    width: 250px;
-    height: 250px;
-    background: url('images/stamp.png') center/contain no-repeat;
-    margin: 20px 0;
-    transition: all 0.5s ease;
-    animation: stampPulse 3s infinite ease-in-out;
-}
-
-@keyframes stampPulse {
-
-    0%,
-    100% {
-        transform: scale(1);
-        opacity: 0.9;
-    }
-
-    50% {
-        transform: scale(1.05);
-        opacity: 1;
-    }
-}
-
-.envelope-open .envelope-bg {
-    opacity: 0;
-}
-
-.envelope-open .triangle-top {
-    transform: translateY(-100%);
-}
-
-.envelope-open .triangle-bottom {
-    transform: translateY(100%);
-}
-
-.envelope-open .stamp {
-    opacity: 0;
-    visibility: hidden;
-}
-
-.envelope-open {
-    pointer-events: none;
-}
-
-.main-content {
-    display: none;
-    width: 100%;
-    height: 100%;
-}
-
-/* =========================== */
-/* ГЛАВНЫЙ БАННЕР С ТАЙМЕРОМ */
-/* =========================== */
-.hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)),
-        url('images/hero-bg.jpg') center/cover no-repeat;
-    min-height: 100vh;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    position: relative;
-
-}
-
-.hero-title {
-    font-family: 'Passions Conflict', cursive;
-    font-size: 7.5rem;
-    margin: 10px;
-    line-height: 1;
-    font-weight: normal;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-.hero-date {
-    font-family: 'Passions Conflict', cursive;
-    font-size: 3.5rem;
-    letter-spacing: 3px;
-    margin-top: 20px;
-    line-height: 1;
-}
-
-/* Стрелка для скролла ниже таймера */
-.scroll-hint {
-    position: relative;
-    /* Убрали absolute */
-    margin-top: 30px;
-    /* Отступ от таймера/кнопки музыки */
-    font-size: 2rem;
-    color: white;
-    animation: bounce 2s infinite;
-    cursor: pointer;
-    text-align: center;
-    display: block;
-}
-
-@keyframes bounce {
-
-    0%,
-    20%,
-    50%,
-    80%,
-    100% {
-        transform: translateY(0);
-        /* Убрали translateX(-50%) */
-    }
-
-    40% {
-        transform: translateY(-10px);
-        /* Убрали translateX(-50%) */
-    }
-
-    60% {
-        transform: translateY(-5px);
-        /* Убрали translateX(-50%) */
-    }
-}
-
-.countdown-container {
-    margin: 40px 0 30px;
-    padding: 25px 30px;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.countdown-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    margin-bottom: 20px;
-    color: rgba(255, 255, 255, 0.9);
-    text-align: center;
-}
-
-.countdown-timer {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.time-block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 100px;
-    padding: 15px 10px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    transition: transform 0.3s ease, background 0.3s ease;
-}
-
-.time-block:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.time-number {
-    font-family: 'Playfair Display', serif;
-    font-size: 3.5rem;
-    font-weight: 700;
-    color: white;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    line-height: 1;
-    margin-bottom: 5px;
-    min-height: 55px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.time-label {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1rem;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.8);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-/* =========================== */
-/* КНОПКА УПРАВЛЕНИЯ МУЗЫКОЙ */
-/* =========================== */
-.controls-top {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0 10px;
-}
-
-.music-control {
-    width: 60px;
-    height: 60px;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.music-control:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: scale(1.1);
-    border-color: rgba(255, 255, 255, 0.5);
-}
-
-.music-control i {
-    font-size: 1.8rem;
-    color: white;
-    transition: all 0.3s ease;
-}
-
-.music-control.playing i {
-    animation: pulseIcon 2s infinite;
-}
-
-@keyframes pulseIcon {
-    0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.1);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-}
-
-/* Состояние паузы (показываем иконку play) */
-.music-control.paused i {
-    animation: none;
-}
-
-
-
-/* =========================== */
-/* ПРИВЕТСТВЕННАЯ СЕКЦИЯ */
-/* =========================== */
-.welcome-section {
-    text-align: center;
-    background-color: rgb(245, 236, 221);
-    margin-bottom: 5px;
-    padding: 20px 0 10px 0;
-}
-
-.welcome-text {
-    font-size: 1.5rem;
-    max-width: 800px;
-    margin: 0px auto;
-    color: #421e0b;
-    line-height: 1.5;
-    margin-bottom: 5px;
-}
-
-.welcome-text--passions {
-    font-family: 'Passions Conflict', cursive;
-    font-size: 7rem;
-    text-align: center;
-    line-height: 0.85;
-    margin-bottom: 20px;
-}
-
-.welcome-text--montserrat {
-    font-family: 'Montserrat Thin Italic', sans-serif;
-    font-weight: 100;
-    text-align: center;
-    font-size: 1.3rem;
-    letter-spacing: 0.5px;
-    margin-top: 0;
-    padding-top: 0;
-}
-
-.calendar-container {
-    text-align: center;
-    margin: 40px 0 20px;
-    padding: 0px;
-}
-
-.calendar-image {
-    max-width: 700px;
-    width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-}
-
-/* =========================== */
-/* ТАЙМЛАЙН С АНИМАЦИЕЙ СЕРДЦА */
-/* =========================== */
-.schedule-section {
-    position: relative;
-    min-height: 1500px;
-    background-color: rgb(245, 236, 221);
-    overflow: visible !important;
-}
-
-.timeline-viewport {
-    position: relative;
-    width: 100%;
-    height: 1378px;
-    margin: 40px 0 30px 0;
-    /* Уменьшили отступы: верх 40px, низ 30px */
-    overflow: hidden;
-}
-
-.timeline-line-img {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 300px;
-    max-width: 90%;
-    height: 1378px;
-    z-index: 1;
-    pointer-events: none;
-    opacity: 1;
-}
-
-.line-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.motion-path {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 300px;
-    height: 1378px;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 2;
-}
-
-
-.heart-fixed {
-    position: fixed !important;
-    width: 60px !important;
-    height: 60px !important;
-    z-index: 1000 !important;
-    pointer-events: none !important;
-    transform: translate(-50%, -50%) !important;
-    opacity: 1 !important;
-    transition: opacity 0.3s ease !important;
-    will-change: left, top !important;
-    /* Скрыто, но сохраняет место */
-}
-
-.heart-icon {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    animation: heartbeat 1.5s infinite ease-in-out;
-}
-
-@keyframes heartbeat {
-
-    0%,
-    100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.1);
-    }
-}
-
-.timeline-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 3;
-}
-
-.timeline-item {
-    position: absolute;
-    width: 45%;
-    padding: 20px;
-    opacity: 1;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    pointer-events: auto;
-}
-
-.timeline-item.active {
-    opacity: 1 !important;
-    transform: scale(1.05) !important;
-}
-
-.timeline-item.left {
-    left: 5%;
-    text-align: right;
-}
-
-.timeline-item.right {
-    right: 5%;
-    text-align: left;
-}
-
-/* Позиции текста на линии - настройте эти значения для корректировки */
-.timeline-item[data-index="0"] {
-    top: 12%;
-}
-
-/* Welcome */
-.timeline-item[data-index="1"] {
-    top: 29%;
-}
-
-/* Церемония */
-.timeline-item[data-index="2"] {
-    top: 46%;
-}
-
-/* Банкет */
-.timeline-item[data-index="3"] {
-    top: 65%;
-}
-
-/* Торт */
-.timeline-item[data-index="4"] {
-    top: 83%;
-}
-
-/* Финал */
-
-.timeline-text {
-    margin-bottom: 10px;
-}
-
-.timeline-label {
-    font-family: 'Passions Conflict', cursive;
-    font-size: 3.5rem;
-    color: #421e0b;
-    display: block;
-    line-height: 1;
-    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8);
-}
-
-.timeline-time {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    color: #421e0b;
-    display: block;
-    margin-top: 5px;
-}
-
-.timeline-item.active .timeline-label {
-    color: #ff3366 !important;
-    text-shadow: 0 0 10px rgba(255, 51, 102, 0.5) !important;
-}
-
-.timeline-item.active .timeline-time {
-    color: #ff3366 !important;
-}
-
-/* =========================== */
-/* МЕСТО ПРОВЕДЕНИЯ */
-/* =========================== */
-.location-section {
-    background-color: rgb(245, 236, 221);
-    padding: 0 0;
-    text-align: center;
-    margin-top: -20px;
-    /* ← Поднять секцию на 20px вверх */
-}
-
-.location-title {
-    font-family: 'Passions Conflict', cursive;
-    font-size: 5rem;
-    color: #421e0b;
-    margin-bottom: 5px;
-    line-height: 1;
-    text-align: center;
-    padding: 10px 0;
-}
-
-.location-name {
-    font-family: 'Montserrat Thin Italic', sans-serif;
-    font-weight: 300;
-    font-size: 1.3rem;
-    color: #421e0b;
-    margin-bottom: 1px;
-    line-height: 1;
-}
-
-.location-address {
-    font-family: 'Montserrat Thin Italic', sans-serif;
-    font-weight: 300;
-    font-size: 1.3rem;
-    color: #421e0b;
-    line-height: 1.2;
-}
-
-.address-line {
-    display: block;
-    margin-bottom: 1px;
-}
-
-:root {
-    --pulse-color: #767b56;
-    --pulse-text-color: #432c1b;
-    --pulse-size: 150px;
-    --pulse-duration: 3s;
-    --pulse-scale: 1.5;
-    --pulse-start-opacity: 0.8;
-    --pulse-mid-opacity: 0.4;
-    --pulse-end-opacity: 0;
-}
-
-.pulse-button-container {
-    text-align: center;
-    margin: 40px auto 20px;
-    padding: 20px;
-}
-
-.pulse-button {
-    display: inline-block;
-    position: relative;
-    width: var(--pulse-size);
-    height: var(--pulse-size);
-    border-radius: 50%;
-    background-color: var(--pulse-color);
-    text-decoration: none;
-    text-align: center;
-    box-shadow: 0 5px 15px rgba(118, 123, 86, 0.3);
-    transition: transform 0.3s ease;
-    z-index: 1;
-}
-
-.button-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: 'Montserrat Thin', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 400;
-    color: var(--pulse-text-color);
-    width: 80%;
-    line-height: 1.3;
-    text-align: center;
-    z-index: 2;
-}
-
-.pulse-button::before,
-.pulse-button::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background-color: var(--pulse-color);
-    opacity: 0;
-    z-index: -1;
-    animation: pulseWave var(--pulse-duration) linear infinite;
-}
-
-.pulse-button::after {
-    animation-delay: calc(var(--pulse-duration) / 2);
-}
-
-@keyframes pulseWave {
-    0% {
-        transform: scale(1);
-        opacity: var(--pulse-start-opacity);
-    }
-
-    50% {
-        opacity: var(--pulse-mid-opacity);
-    }
-
-    100% {
-        transform: scale(var(--pulse-scale));
-        opacity: var(--pulse-end-opacity);
-    }
-}
-
-.pulse-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 25px rgba(118, 123, 86, 0.4);
-}
-
-.pulse-button:active {
-    transform: scale(0.98);
-}
-
-.location-photo-container {
-    text-align: center;
-    margin: 30px auto 40px;
-    max-width: 800px;
-    padding: 0 20px;
-}
-
-.location-photo {
-    width: 100%;
-    max-width: 600px;
-    height: auto;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: block;
-    margin: 0 auto;
-}
-
-/* =========================== */
-/* ДРЕСС-КОД */
-/* =========================== */
-.dresscode-section {
-    background-color: rgb(245, 236, 221);
-    padding: 0px 0;
-    text-align: center;
-}
-
-.dresscode-title {
-    font-family: 'Passions Conflict', cursive;
-    font-size: 5rem;
-    color: #421e0b;
-    margin-bottom: 5px;
-    line-height: 1;
-    text-align: center;
-}
-
-.dresscode-text {
-    font-family: 'Montserrat Thin Italic', sans-serif;
-    font-weight: 300;
-    font-size: 1.3rem;
-    color: #421e0b;
-    margin-bottom: 1px;
-    line-height: 1;
-}
-
-.color-palette {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 40px;
-    flex-wrap: wrap;
-}
-
-.color-square {
-    width: 45px;
-    height: 45px;
-    background-color: #767b56;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    cursor: pointer;
-    position: relative;
-}
-
-
-/* =========================== */
-/* КАРУСЕЛЬ ФОТОГРАФИЙ */
-/* =========================== */
-.carousel-section {
-    background-color: rgb(245, 236, 221);
-    padding: 40px 0 0px 0;
-    text-align: center;
-}
-
-.carousel-container {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.carousel {
-    position: relative;
-    width: 100%;
-    height: 500px;
-    overflow: hidden;
-    border-radius: 0;
-    /* box-shadow: 0 15px 50px rgba(66, 30, 11, 0.15);*/
-    margin-bottom: 20px;
-}
-
-.carousel-track {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.5s ease-in-out;
-    margin: 0;
-    padding: 0;
-    /*align-items: center;
-    /* Центрируем слайды по вертикали */
-}
-
-.carousel-slide {
-    flex: 0 0 100%;
-    height: 100%;
-    position: relative;
-    display: flex;
-    /* ← Добавляем flex для центрирования содержимого */
-    align-items: center;
-    /* ← Центрируем содержимое ВЕРТИКАЛЬНО внутри слайда */
-    justify-content: center;
-    /* ← Центрируем ГОРИЗОНТАЛЬНО */
-    overflow: hidden;
-    /* ← Скрываем выходящие за границы части */
-}
-
-.carousel-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    /* ← cover обрезает фото, но сохраняет пропорции */
-    display: block;
-    /* Убираем возможные отступы у изображений */
-    margin: 0;
-    padding: 0;
-}
-
-.carousel-slide-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 20px;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-    color: white;
-    text-align: left;
-}
-
-/* Кнопки навигации */
-.carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 50px;
-    height: 50px;
-    background: rgba(245, 236, 221, 0.5);
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.2rem;
-    color: #421e0b;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    z-index: 10;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
-}
-
-.carousel-btn:hover {
-    background: white;
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-}
-
-.carousel-btn--prev {
-    left: 20px;
-}
-
-.carousel-btn--next {
-    right: 20px;
-}
-
-
-
-
-.location-photo-container-details {
-    text-align: center;
-    margin: 70px auto 40px;
-    max-width: 800px;
-    padding: 0 20px;
-}
-
-.details-photo-wrapper {
-    position: relative;
-    display: inline-block;
-    max-width: 400px;
-    width: 100%;
-}
-
-.location-photo-details {
-    width: 100%;
-    height: auto;
-    border-radius: 15px;
-    display: block;
-    margin: 0 auto;
-}
-
-.details-text-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 30px;
-    box-sizing: border-box;
-    text-align: center;
-    color: white;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-}
-
-.Details-title {
-    font-family: 'Passions Conflict', cursive;
-    font-size: 7rem;
-    margin: 0 0 20px 0;
-    font-weight: normal;
-    line-height: 1;
-    color: white;
-}
-
-.Details-line {
-    font-family: 'Montserrat Thin Italic', sans-serif;
-    font-size: 1rem;
-    letter-spacing: 1px;
-    margin: 10px 0;
-    line-height: 1.4;
-    color: white;
-    max-width: 90%;
-}
-
-/* =========================== */
-/* АНКЕТА GOOGLE FORMS */
-/* =========================== */
-.rsvp-section {
-    background-color: rgb(245, 236, 221);
-    padding: 20px 0;
-    text-align: center;
-}
-
-.google-forms-container {
-    max-width: 650px;
-    margin: 0 auto;
-    padding: 20px 0;
-}
-
-.forms-iframe-wrapper {
-    position: relative;
-    width: 100%;
-    background: transparent;
-    /* Убрали фон контейнера */
-    border-radius: 0;
-    /* Убрали скругление углов */
-    overflow: visible;
-    /* Изменили на visible */
-    box-shadow: none;
-    /* Убрали тень */
-    border: none;
-    /* Убрали рамку */
-}
-
-.google-forms-iframe {
-    display: block;
-    border: none;
-    min-height: auto;
-    height: 900px;
-    width: 100%;
-    background: transparent;
-}
-
-
-
-
-/* =========================== */
-/* ФИНАЛЬНАЯ СЕКЦИЯ */
-/* =========================== */
-.Goodbye-section {
-    padding: 60px 0;
-    text-align: center;
-    background-color: rgb(245, 236, 221);
-    margin-top: -50px;
-}
-
-.goodbye-photo-container {
-    text-align: center;
-    margin: 0 auto;
-    max-width: 800px;
-    padding: 0 20px 20px 20px;
-}
-
-.goodbye-photo-wrapper {
-    position: relative;
-    display: inline-block;
-    max-width: 400px;
-    width: 100%;
-    margin: 0 auto;
-}
-
-.goodbye-photo {
-    width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-}
-
-.goodbye-text-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-    text-align: center;
-    padding: 0 20px;
-}
-
-.goodbye-title {
-    font-family: 'Passions Conflict', cursive;
-    font-size: 5rem;
-    margin: 0;
-    font-weight: normal;
-    line-height: 1;
-    color: white;
-}
-
-/* =========================== */
-/* АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ */
-/* =========================== */
-
-/* ПЛАНШЕТЫ (768px и меньше) */
-@media (max-width: 768px) {
-
-    /* Заставка */
-    .stamp {
-        width: 200px;
-        height: 200px;
-    }
-
-    .hero {
-        /* Изменяем позицию фона - смещаем влево на 30% */
-        background-position-x: 60%;
-        min-height: 10vh;
-    }
-
-    /* Главный баннер */
-    .hero-title {
-        font-size: 4.5rem;
-        /* Уменьшаем заголовок */
-    }
-
-    .hero-date {
-        font-size: 2.8rem;
-        /* Уменьшаем дату */
-    }
-
-    .countdown-container {
-        padding: 20px 15px;
-        margin: 30px 15px;
-    }
-
-    .time-block {
-        min-width: 80px;
-        /* Уменьшаем блоки таймера */
-        padding: 12px 8px;
-    }
-
-    .time-number {
-        font-size: 2.8rem;
-        /* Уменьшаем цифры */
-        min-height: 45px;
-    }
-
-    .time-label {
-        font-size: 0.9rem;
-        /* Уменьшаем текст под цифрами */
-    }
-
-    .music-control {
-        top: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-    }
-
-    .music-control i {
-        font-size: 1.5rem;
-    }
-
-    .countdown-timer {
-        gap: 15px;
-        /* Уменьшаем расстояние между блоками */
-    }
-
-    /* Приветственная секция */
-    .welcome-text--passions {
-        font-size: 3.5rem;
-        /* Уменьшаем "Дорогие гости" */
-        line-height: 0.8;
-        margin-bottom: 5px;
-    }
-
-    .timeline-item {
-        width: 40%;
-        /* Уменьшаем ширину текстовых блоков */
-        padding: 15px;
-    }
-
-    /* Место проведения */
-    .location-title {
-        font-size: 3.2rem;
-        /* Уменьшаем "Место проведения" */
-    }
-
-    .location-name {
-        font-size: 2.2rem;
-        /* Уменьшаем "База отдыха" */
-    }
-
-    .location-address {
-        font-size: 1.1rem;
-        /* Уменьшаем адрес */
-    }
-
-    .location-photo-container {
-        margin: 25px auto 35px;
-        padding: 0 15px;
-    }
-
-    :root {
-        --pulse-size: 130px;
-        /* Уменьшаем кнопку "Построить маршрут" */
-        --pulse-scale: 1.6;
-    }
-
-    .button-text {
-        font-size: 1rem;
-        /* Уменьшаем текст в кнопке */
-    }
-
-    /* Дресс-код */
-    .dresscode-title {
-        font-size: 3.2rem;
-        /* Уменьшаем "Дресс-код" */
-    }
-
-    .dresscode-text {
-        font-size: 1.2rem;
-        /* Уменьшаем текст дресс-кода */
-        margin-bottom: 30px;
-    }
-
-    .color-square {
-        width: 50px;
-        /* Уменьшаем квадраты палитры */
-        height: 50px;
-    }
-
-    .color-palette {
-        gap: 15px;
-        /* Уменьшаем расстояние между квадратами */
-    }
-
-    .carousel {
-        height: 500px;
-        border-radius: 15px;
-    }
-
-    .carousel-btn {
-        width: 45px;
-        height: 45px;
-        font-size: 1.1rem;
-    }
-
-    .carousel-slide-title {
-        font-size: 1.1rem;
-    }
-
-    .carousel-caption {
-        font-size: 1rem;
-        padding: 0 15px;
-    }
-
-    .Details-title {
-        font-size: 4rem;
-        /* Уменьшаем "Details" */
-        margin-bottom: 15px;
-    }
-
-    .Details-line {
-        font-size: 1.1rem;
-        /* Уменьшаем текст в Details */
-        letter-spacing: 0.8px;
-    }
-
-    .details-text-overlay {
-        padding: 20px;
-        /* Уменьшаем отступы текста */
-    }
-
-    /* Анкета Google Forms */
-    .google-forms-container {
-        padding: 0 15px;
-    }
-
-    .forms-iframe-wrapper {
-        border-radius: 10px;
-    }
-
-    .google-forms-iframe {
-        min-height: 800px;
-        /* Увеличиваем высоту формы */
-    }
-
-    /* Финальная секция */
-    .goodbye-title {
-        font-size: 4rem;
-        /* Уменьшаем "До скорой встречи" */
-    }
-}
-
-/* МОБИЛЬНЫЕ ТЕЛЕФОНЫ (480px и меньше) */
-@media (max-width: 480px) {
-
-    /* Заставка */
-    .stamp {
-        width: 180px;
-        height: 180px;
-        left: auto;
-    }
-
-    /* треугольник верхний */
-    .triangle-top {
-        width: 200%;
-        height: 50vh;
-        left: auto;
-    }
-
-    /* треугольник нижний */
-    .triangle-bottom {
-        width: 200%;
-        height: 50vh;
-        left: auto;
-    }
-
-    .hero {
-        /* Изменяем позицию фона - смещаем влево на 60% */
-        background-position: left 60% center;
-        min-height: 10vh;
-    }
-
-    /* Главный баннер */
-    .hero-title {
-        font-size: 3.8rem;
-        /* Уменьшаем заголовок для телефонов */
-        line-height: 1;
-
-    }
-
-    .welcome-text--passions {
-        /* Отступ после дорогие гости */
-        padding: 0 0 20px;
-    }
-
-    .hero-date {
-        font-size: 2.2rem;
-        /* Уменьшаем дату для телефонов */
-        letter-spacing: 2px;
-    }
-
-    .music-control-container {
-        margin-top: 10px;
-        /* Отступ от таймера */
-    }
-
-    .music-control {
-        top: 15px;
-        right: 15px;
-        width: 45px;
-        height: 45px;
-    }
-
-    .music-control i {
-        font-size: 1.3rem;
-    }
-
-    .countdown-container {
-        max-width: 95%;
-        /* Уменьшаем ширину контейнера */
-    }
-
-    .countdown-timer {
-        gap: 8px;
-        /* Уменьшаем расстояние между блоками таймера */
-        justify-content: space-around;
-        /* Равномерно распределяем блоки */
-    }
-
-    .time-block {
-        min-width: 30px;
-        /* Значительно уменьшаем блоки */
-        /*padding: 8px 5px;*/
-    }
-
-    .time-number {
-        font-size: 1.5rem;
-        /* Уменьшаем цифры */
-        min-height: 35px;
-    }
-
-    .time-label {
-        font-size: 0.5rem;
-        /* Уменьшаем текст под цифрами */
-    }
-
-    .countdown-text {
-        font-size: 1.1rem;
-        /* Уменьшаем текст над таймером */
-    }
-
-    /* Приветственная секция */
-    .welcome-text--passions {
-        font-size: 4rem;
-        /* Делаем размер как "Место проведения" */
-        line-height: 0.7;
-        margin-bottom: 0;
-    }
-
-    .line-image {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
-
-    .schedule-section {
-
-        min-height: 10px;
-
-    }
-
-    /* Таймлайн с анимацией сердца */
-    .timeline-viewport {
-
-        height: 800px;
-        /* Уменьшаем высоту контейнера */
-    }
-
-    .timeline-line-img {
-        height: 800px;
-        /* Еще больше уменьшаем высоту видимой линии */
-    }
-
-    .motion-path {
-        height: 800px;
-        width: auto;
-        /* Еще больше уменьшаем высоту пути для сердца */
-    }
-
-    .timeline-item {
-        width: 38%;
-        /* Уменьшаем ширину текстовых блоков */
-        padding: 10px;
-    }
-
-    .timeline-label {
-        font-size: 2.5rem;
-        /* Уменьшаем названия событий */
-    }
-
-    .timeline-time {
-        font-size: 1.7rem;
-        /* Уменьшаем время */
-    }
-
-    /* Настройте эти значения для корректировки позиций текста на линии */
-    .timeline-item[data-index="0"] {
-        top: 5%;
-    }
-
-    /* Welcome */
-    .timeline-item[data-index="1"] {
-        top: 27%;
-    }
-
-    /* Церемония */
-    .timeline-item[data-index="2"] {
-        top: 44%;
-    }
-
-    /* Банкет */
-    .timeline-item[data-index="3"] {
-        top: 63%;
-    }
-
-    /* Торт */
-    .timeline-item[data-index="4"] {
-        top: 81%;
-    }
-
-    /* Финал */
-
-    .heart-fixed {
-        width: 40px !important;
-        /* Уменьшаем сердце */
-        height: 40px !important;
-    }
-
-    /* Место проведения */
-    .location-title {
-        font-size: 4rem;
-        /* Размер как "Дорогие гости" */
-    }
-
-    .location-name {
-        font-size: 1.8rem;
-        /* Уменьшаем "База отдыха" */
-    }
-
-    .location-address {
-        font-size: 1rem;
-        /* Уменьшаем адрес */
-    }
-
-    .location-photo-container {
-        margin: 20px auto 30px;
-        padding: 0 10px;
-    }
-
-    :root {
-        --pulse-size: 100px;
-        /* Значительно уменьшаем кнопку "Построить маршрут" */
-        --pulse-scale: 1.8;
-    }
-
-    .button-text {
-        font-size: 0.9rem;
-        /* Уменьшаем текст в кнопке */
-    }
-
-    /* Дресс-код */
-    .dresscode-title {
-        font-size: 4rem;
-        /* Размер как "Дорогие гости" */
-    }
-
-    .dresscode-text {
-        font-size: 1.1rem;
-        /* Уменьшаем текст дресс-кода */
-        margin-bottom: 30px;
-    }
-
-    .color-square {
-        width: 40px;
-        /* Уменьшаем квадраты палитры */
-        height: 40px;
-    }
-
-    .color-palette {
-        gap: 10px;
-        /* Уменьшаем расстояние между квадратами */
-        margin-top: 30px;
-    }
-
-    .carousel {
-        height: 500px;
-        border-radius: 12px;
-    }
-
-    .carousel-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
-    }
-
-    .carousel-btn--prev {
-        left: 10px;
-    }
-
-    .carousel-btn--next {
-        right: 10px;
-    }
-
-    .carousel-slide-title {
-        font-size: 1rem;
-        padding: 10px;
-    }
-
-    .carousel-slide-number {
-        font-size: 0.8rem;
-        padding: 0 10px 10px;
-    }
-
-    .carousel-dots {
-        bottom: 15px;
-        gap: 8px;
-    }
-
-    .carousel-dot {
-        width: 10px;
-        height: 10px;
-    }
-
-    .carousel-caption {
-        font-size: 0.9rem;
-        padding: 0 10px;
-    }
-
-    .carousel-container {
-        padding: 0 10px;
-    }
-
-    .Details-title {
-        font-size: 4rem;
-        /* Размер как "Дорогие гости" */
-        margin-bottom: 10px;
-    }
-
-    .Details-line {
-        font-size: 0.9rem;
-        /* Уменьшаем текст в Details */
-        letter-spacing: 0.5px;
-        max-width: 95%;
-    }
-
-    .details-text-overlay {
-        padding: 15px;
-        /* Уменьшаем отступы текста */
-    }
-
-    /* Анкета Google Forms */
-    .google-forms-iframe {
-        min-height: 700px;
-        height: 1200px;
-        /* Увеличиваем высоту формы для телефонов */
-    }
-
-    /* Финальная секция */
-    .goodbye-title {
-        font-size: 3rem;
-        /* Уменьшаем "До скорой встречи" */
-    }
-}
-
-/* ОЧЕНЬ МАЛЕНЬКИЕ ТЕЛЕФОНЫ (360px и меньше) */
-@media (max-width: 360px) {
-    .color-palette {
-        gap: 8px;
-        /* Еще меньше расстояние между квадратами */
-    }
-
-    .color-square {
-        width: 35px;
-        /* Еще меньше квадраты палитры */
-        height: 35px;
-    }
-
-    .location-photo {
-        height: 250px;
-        /* Уменьшаем высоту фото */
-    }
-
-    /* Таймер - дополнительные корректировки для очень маленьких экранов */
-    .countdown-timer {
-        gap: 5px;
-    }
-
-    .time-block {
-        min-width: 55px;
-        padding: 6px 4px;
-    }
-
-    .time-number {
-        font-size: 1.8rem;
-        min-height: 30px;
-    }
-
-    .time-label {
-        font-size: 0.65rem;
-    }
-}
+// Основная анимация заставки и таймера
+document.addEventListener('DOMContentLoaded', function () {
+    // Элементы заставки
+    const stamp = document.getElementById('stamp');
+    const envelopeContainer = document.getElementById('envelopeContainer');
+    const mainContent = document.getElementById('mainContent');
+
+    // Скрываем основной контент в начале
+    mainContent.style.display = 'none';
+
+    // Обработчик клика по печати
+    stamp.addEventListener('click', function () {
+        // Показываем основной контент
+        mainContent.style.display = 'block';
+
+        // Запускаем анимацию конверта
+        envelopeContainer.classList.add('envelope-open');
+
+        // Убираем заставку через 10 секунд
+        setTimeout(() => {
+            console.log('Анимация завершена');
+        }, 10000);
+    });
+
+    // Плавная прокрутка
+    const scrollHint = document.querySelector('.scroll-hint');
+    if (scrollHint) {
+        scrollHint.addEventListener('click', function () {
+            window.scrollTo({
+                top: window.innerHeight,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // ТАЙМЕР ОБРАТНОГО ОТСЧЕТА
+    const weddingDate = new Date('2026-07-18T15:00:00').getTime();
+
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const timeLeft = weddingDate - now;
+
+        if (timeLeft < 0) {
+            document.getElementById('countdown').innerHTML = `
+                <div style="text-align: center; padding: 20px;">
+                    <h3 style="color: white; font-family: 'Playfair Display', serif;">
+                        🎉 Этот день настал! С праздником! 🎉
+                    </h3>
+                </div>
+            `;
+            return;
+        }
+
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+        updateNumberWithAnimation('days', days.toString().padStart(3, '0'));
+        updateNumberWithAnimation('hours', hours.toString().padStart(2, '0'));
+        updateNumberWithAnimation('minutes', minutes.toString().padStart(2, '0'));
+        updateNumberWithAnimation('seconds', seconds.toString().padStart(2, '0'));
+    }
+
+    function updateNumberWithAnimation(elementId, newValue) {
+        const element = document.getElementById(elementId);
+        const currentValue = element.textContent;
+
+        if (currentValue !== newValue) {
+            element.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                element.textContent = newValue;
+                element.style.transform = 'scale(1)';
+                element.style.color = 'white';
+            }, 150);
+        } else {
+            element.textContent = newValue;
+        }
+    }
+
+    updateCountdown();
+    const countdownInterval = setInterval(updateCountdown, 1000);
+
+    document.addEventListener('visibilitychange', function () {
+        if (document.hidden) {
+            clearInterval(countdownInterval);
+        } else {
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+    });
+});
+
+
+
+
+// ===========================
+// КАРУСЕЛЬ ФОТОГРАФИЙ
+// ===========================
+
+document.addEventListener('DOMContentLoaded', function () {
+    const carouselTrack = document.getElementById('carouselTrack');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const carouselDots = document.getElementById('carouselDots');
+
+    if (!carouselTrack) return;
+
+    // Настройки карусели
+    const config = {
+        originalImages: 7, // Количество оригинальных изображений
+        imageBaseName: 'images/карусель_', // Базовое имя файлов
+        imageExtension: '.jpg', // Расширение файлов
+        autoPlay: true, // Автоматическая смена слайдов
+        autoPlayInterval: 5000, // Интервал в миллисекундах (5 секунд)
+        infiniteScroll: true // Бесконечная прокрутка
+    };
+
+    let currentSlide = 1; // Начинаем с первого оригинала (индекс 1, так как 0 - клон последнего)
+    let autoPlayTimer = null;
+    let isAnimating = false;
+    let allowTransition = true; // Разрешение на анимацию
+
+    // Функция для инициализации карусели
+    function initCarousel() {
+        // Создаем слайды
+        for (let i = 1; i <= config.originalImages; i++) {
+            const slide = document.createElement('div');
+            slide.className = 'carousel-slide';
+            slide.dataset.index = i - 1;
+
+            const image = document.createElement('img');
+            image.src = `${config.imageBaseName}${i}${config.imageExtension}`;
+            image.alt = `Фотография свадебного места ${i}`;
+            image.className = 'carousel-image';
+            image.loading = 'lazy';
+
+            const overlay = document.createElement('div');
+            overlay.className = 'carousel-slide-overlay';
+
+            const title = document.createElement('p');
+            title.className = 'carousel-slide-title';
+
+            const number = document.createElement('p');
+            number.className = 'carousel-slide-number';
+
+            overlay.appendChild(title);
+            overlay.appendChild(number);
+            slide.appendChild(image);
+            slide.appendChild(overlay);
+            carouselTrack.appendChild(slide);
+        }
+
+        const slides = carouselTrack.querySelectorAll('.carousel-slide');
+
+        // Клонируем для бесконечной прокрутки
+        if (config.infiniteScroll && slides.length > 0) {
+            // Клонируем последний слайд и добавляем в начало
+            const lastClone = slides[slides.length - 1].cloneNode(true);
+            lastClone.classList.add('clone');
+            lastClone.dataset.clone = 'last';
+            carouselTrack.insertBefore(lastClone, slides[0]);
+
+            // Клонируем первый слайд и добавляем в конец
+            const firstClone = slides[0].cloneNode(true);
+            firstClone.classList.add('clone');
+            firstClone.dataset.clone = 'first';
+            carouselTrack.appendChild(firstClone);
+        }
+
+        // Создаем точки-индикаторы
+        if (carouselDots) {
+            for (let i = 0; i < config.originalImages; i++) {
+                const dot = document.createElement('button');
+                dot.className = 'carousel-dot';
+                if (i === 0) dot.classList.add('active');
+                dot.dataset.index = i;
+                dot.addEventListener('click', () => goToSlide(i));
+                carouselDots.appendChild(dot);
+            }
+        }
+
+        // Устанавливаем начальную позицию
+        updateCarouselPosition(false); // false - без анимации для начальной позиции
+
+        // Добавляем обработчики для кнопок
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => changeSlide(-1));
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => changeSlide(1));
+        }
+
+        // Добавляем обработчики для свайпов
+        setupTouchEvents();
+
+        // Запускаем автоплей
+        if (config.autoPlay) {
+            startAutoPlay();
+            carouselTrack.addEventListener('mouseenter', stopAutoPlay);
+            carouselTrack.addEventListener('mouseleave', startAutoPlay);
+            carouselTrack.addEventListener('touchstart', stopAutoPlay);
+        }
+    }
+
+    // Функция для смены слайда
+    function changeSlide(direction) {
+        if (isAnimating) return;
+
+        isAnimating = true;
+        const totalSlides = carouselTrack.children.length;
+
+        // Вычисляем новый индекс
+        let newSlide = currentSlide + direction;
+
+        // Проверяем, достигли ли мы границ
+        const isAtLastOriginal = (currentSlide === totalSlides - 2 && direction === 1);
+        const isAtFirstOriginal = (currentSlide === 1 && direction === -1);
+
+        if (config.infiniteScroll) {
+            if (isAtLastOriginal) {
+                // Переход от последнего оригинала к первому (через клон)
+                currentSlide = totalSlides - 1; // Клон первого слайда
+                updateCarouselPosition(true); // Анимируем к клону
+
+                // После анимации к клону, мгновенно переходим к первому оригиналу
+                setTimeout(() => {
+                    allowTransition = false; // Временно отключаем анимацию
+                    carouselTrack.style.transition = 'none';
+                    currentSlide = 1; // Первый оригинальный слайд
+                    updateCarouselPosition(false); // Без анимации
+
+                    // Включаем анимацию снова
+                    setTimeout(() => {
+                        carouselTrack.style.transition = 'transform 0.5s ease-in-out';
+                        allowTransition = true;
+                        isAnimating = false;
+                    }, 50);
+                }, 500); // Ждем завершения анимации (0.5s)
+            } else if (isAtFirstOriginal) {
+                // Переход от первого оригинала к последнему (через клон)
+                currentSlide = 0; // Клон последнего слайда
+                updateCarouselPosition(true); // Анимируем к клону
+
+                // После анимации к клону, мгновенно переходим к последнему оригиналу
+                setTimeout(() => {
+                    allowTransition = false; // Временно отключаем анимацию
+                    carouselTrack.style.transition = 'none';
+                    currentSlide = totalSlides - 2; // Последний оригинальный слайд
+                    updateCarouselPosition(false); // Без анимации
+
+                    // Включаем анимацию снова
+                    setTimeout(() => {
+                        carouselTrack.style.transition = 'transform 0.5s ease-in-out';
+                        allowTransition = true;
+                        isAnimating = false;
+                    }, 50);
+                }, 500); // Ждем завершения анимации (0.5s)
+            } else {
+                // Обычный переход
+                currentSlide = newSlide;
+                updateCarouselPosition(true);
+                setTimeout(() => {
+                    isAnimating = false;
+                }, 500);
+            }
+        } else {
+            // Обычная прокрутка без бесконечности
+            if (newSlide >= 0 && newSlide < totalSlides) {
+                currentSlide = newSlide;
+                updateCarouselPosition(true);
+                setTimeout(() => {
+                    isAnimating = false;
+                }, 500);
+            } else {
+                isAnimating = false;
+            }
+        }
+
+        // Обновляем точки
+        updateDots();
+
+        // Перезапускаем автоплей
+        if (config.autoPlay) {
+            restartAutoPlay();
+        }
+    }
+
+    // Функция для перехода к конкретному слайду
+    function goToSlide(index) {
+        if (isAnimating) return;
+
+        isAnimating = true;
+
+        // Для бесконечной карусели: оригинальные слайды начинаются с индекса 1
+        currentSlide = config.infiniteScroll ? index + 1 : index;
+
+        updateCarouselPosition(true);
+        updateDots();
+
+        setTimeout(() => {
+            isAnimating = false;
+        }, 500);
+
+        // Перезапускаем автоплей
+        if (config.autoPlay) {
+            restartAutoPlay();
+        }
+    }
+
+    // Функция для обновления позиции карусели
+    function updateCarouselPosition(withTransition = true) {
+        if (!withTransition || !allowTransition) {
+            carouselTrack.style.transition = 'none';
+        } else {
+            carouselTrack.style.transition = 'transform 0.5s ease-in-out';
+        }
+
+        carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+
+    // Функция для обновления точек
+    function updateDots() {
+        if (!carouselDots) return;
+
+        const dots = carouselDots.querySelectorAll('.carousel-dot');
+        let activeDotIndex;
+
+        if (config.infiniteScroll) {
+            const totalSlides = carouselTrack.children.length;
+
+            // Конвертируем индекс для отображения в точках
+            if (currentSlide === 0) {
+                activeDotIndex = config.originalImages - 1; // Клон последнего -> последний оригинальный
+            } else if (currentSlide === totalSlides - 1) {
+                activeDotIndex = 0; // Клон первого -> первый оригинальный
+            } else {
+                activeDotIndex = currentSlide - 1; // Оригинальные слайды
+            }
+        } else {
+            activeDotIndex = currentSlide;
+        }
+
+        dots.forEach((dot, index) => {
+            if (index === activeDotIndex) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+    }
+
+    // Функция для автоплея
+    function startAutoPlay() {
+        if (autoPlayTimer) clearInterval(autoPlayTimer);
+
+        autoPlayTimer = setInterval(() => {
+            changeSlide(1);
+        }, config.autoPlayInterval);
+    }
+
+    function stopAutoPlay() {
+        if (autoPlayTimer) {
+            clearInterval(autoPlayTimer);
+            autoPlayTimer = null;
+        }
+    }
+
+    function restartAutoPlay() {
+        stopAutoPlay();
+        startAutoPlay();
+    }
+
+    // Функция для обработки свайпов на мобильных
+    function setupTouchEvents() {
+        let startX = 0;
+        let endX = 0;
+        const minSwipeDistance = 50;
+
+        carouselTrack.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        }, { passive: true });
+
+        carouselTrack.addEventListener('touchmove', (e) => {
+            endX = e.touches[0].clientX;
+        }, { passive: true });
+
+        carouselTrack.addEventListener('touchend', () => {
+            const diffX = startX - endX;
+
+            if (Math.abs(diffX) > minSwipeDistance) {
+                if (diffX > 0) {
+                    changeSlide(1); // Свайп влево -> следующий
+                } else {
+                    changeSlide(-1); // Свайп вправо -> предыдущий
+                }
+            }
+        });
+    }
+
+    // Инициализируем карусель
+    initCarousel();
+
+    // Добавляем обработчик клавиатуры для доступности
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            changeSlide(-1);
+            e.preventDefault();
+        } else if (e.key === 'ArrowRight') {
+            changeSlide(1);
+            e.preventDefault();
+        }
+    });
+});
+
+
+
+
+
+// -------------------------------
+// Анимация сердца по таймлайну
+// -------------------------------
+(function () {
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const heart = document.querySelector('.heart-fixed');
+
+        if (heart) {
+            heart.style.opacity = '0';
+            heart.style.left = '-10000px';
+            heart.style.top = '-10000px';
+        }
+
+        const motionPath = document.getElementById('heartMotionPath');
+        const section = document.getElementById('scheduleSection');
+        const timelineViewport = document.querySelector('.timeline-viewport');
+
+        if (!heart || !motionPath || !section || !timelineViewport) return;
+
+        const pathLength = motionPath.getTotalLength();
+        const ACTIVATION_ZONE = 0.07;
+
+        const elementPositions = [
+            0.12,  // Welcome (16:00)
+            0.29,  // Церемония (17:00)
+            0.46,  // Банкет (18:30)
+            0.65,  // Торт (22:00)
+            0.83   // Финал (23:00)
+        ];
+
+        function updateHeartPosition() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const windowHeight = window.innerHeight;
+
+            const viewportRect = timelineViewport.getBoundingClientRect();
+            const viewportTop = viewportRect.top + scrollTop;
+            const viewportBottom = viewportTop + viewportRect.height;
+
+            const endPoint = viewportBottom - (windowHeight / 3);
+            const startPoint = viewportTop - 200;
+
+            let progress;
+
+            if (scrollTop < startPoint) {
+                progress = 0;
+            } else if (scrollTop > endPoint) {
+                progress = 1;
+            } else {
+                progress = (scrollTop - startPoint) / (endPoint - startPoint);
+            }
+
+            progress = Math.max(0, Math.min(1, progress));
+
+            const pointOnPath = motionPath.getPointAtLength(progress * pathLength);
+            const svgElement = motionPath.ownerSVGElement;
+            const svgRect = svgElement.getBoundingClientRect();
+
+            const svgViewBox = svgElement.viewBox.baseVal;
+            const viewBoxWidth = svgViewBox.width || 300;
+            const viewBoxHeight = svgViewBox.height || 1378;
+
+            const scaleX = svgRect.width / viewBoxWidth;
+            const scaleY = svgRect.height / viewBoxHeight;
+
+            const heartX = svgRect.left + (pointOnPath.x * scaleX);
+            const heartY = svgRect.top + (pointOnPath.y * scaleY);
+
+
+            heart.style.left = heartX + 'px';
+            heart.style.top = heartY + 'px';
+
+
+            const timelineItems = document.querySelectorAll('.timeline-item');
+
+            timelineItems.forEach((item, index) => {
+                const elementPosition = elementPositions[index];
+                if (Math.abs(progress - elementPosition) <= ACTIVATION_ZONE) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+
+        let ticking = false;
+        function onScroll() {
+            if (!ticking) {
+                requestAnimationFrame(function () {
+                    updateHeartPosition();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', onScroll);
+        window.addEventListener('resize', updateHeartPosition);
+        window.addEventListener('load', updateHeartPosition);
+
+        updateHeartPosition();
+    });
+
+    // ===========================
+    // УПРАВЛЕНИЕ МУЗЫКОЙ
+    // ===========================
+
+    // Функция для управления музыкой
+    function initMusicPlayer() {
+        const musicPlayer = document.getElementById('weddingMusic');
+        const musicControl = document.getElementById('musicControl');
+        const musicIcon = document.getElementById('musicIcon');
+
+        // Проверяем, существуют ли элементы
+        if (!musicPlayer || !musicControl || !musicIcon) {
+            console.warn('Элементы музыкального плеера не найдены');
+            return;
+        }
+
+        musicPlayer.volume = 0.5; // ← ЭТО МЕСТО! 0.7 = 70% громкости
+
+        // Начинаем воспроизведение автоматически при открытии заставки
+        let isPlaying = false;
+
+        // Функция для воспроизведения музыки
+        function playMusic() {
+            musicPlayer.play().then(() => {
+                isPlaying = true;
+                musicControl.classList.add('playing');
+                musicControl.classList.remove('paused');
+                musicIcon.classList.remove('fa-play');
+                musicIcon.classList.add('fa-pause');
+            }).catch(error => {
+                console.log('Автовоспроизведение заблокировано:', error);
+                // Если автовоспроизведение заблокировано, показываем кнопку play
+                isPlaying = false;
+                musicControl.classList.remove('playing');
+                musicControl.classList.add('paused');
+                musicIcon.classList.remove('fa-pause');
+                musicIcon.classList.add('fa-play');
+            });
+        }
+
+        // Функция для остановки музыки
+        function pauseMusic() {
+            musicPlayer.pause();
+            isPlaying = false;
+            musicControl.classList.remove('playing');
+            musicControl.classList.add('paused');
+            musicIcon.classList.remove('fa-pause');
+            musicIcon.classList.add('fa-play');
+        }
+
+        // Функция для переключения воспроизведения/паузы
+        function toggleMusic() {
+            if (isPlaying) {
+                pauseMusic();
+            } else {
+                playMusic();
+            }
+        }
+
+        // Обработчик клика по кнопке
+        musicControl.addEventListener('click', toggleMusic);
+
+        // Обработчик ошибок воспроизведения
+        musicPlayer.addEventListener('error', function (e) {
+            console.error('Ошибка загрузки аудио:', e);
+            musicControl.style.display = 'none'; // Скрываем кнопку при ошибке
+        });
+
+        // Автоматически запускаем музыку при открытии конверта
+        const stamp = document.getElementById('stamp');
+        if (stamp) {
+            stamp.addEventListener('click', function () {
+                // Ждем немного, чтобы анимация конверта началась
+                setTimeout(playMusic, 500);
+            });
+        }
+
+        // Также можно запускать при загрузке страницы (если конверт уже открыт)
+        window.addEventListener('load', function () {
+            // Проверяем, открыт ли уже конверт
+            const envelopeContainer = document.getElementById('envelopeContainer');
+            if (envelopeContainer && envelopeContainer.classList.contains('envelope-open')) {
+                setTimeout(playMusic, 1000);
+            }
+        });
+    }
+
+    // Инициализируем музыкальный плеер после загрузки DOM
+    document.addEventListener('DOMContentLoaded', initMusicPlayer);
+
+})();
