@@ -1467,9 +1467,9 @@ section {
     }
 
     .color-square {
-        width: 45px;
+        width: 40px;
         /* Уменьшаем квадраты палитры */
-        height: 45px;
+        height: 40px;
     }
 
     .color-palette {
@@ -1595,5 +1595,6 @@ section {
         font-size: 0.65rem;
     }
 }
+
 
 
